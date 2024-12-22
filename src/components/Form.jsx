@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { RiSparkling2Fill, RiMagicLine } from "react-icons/ri";
 
 const services = [
@@ -11,6 +11,19 @@ const services = [
 ];
 
 const Form = () => {
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]);
+
+  const handleCheckbox = (value, status) => {
+    setSelectedServices((prevState) => {
+      return status
+        ? [...prevState, value]
+        : prevState.filter((v) => v !== value);
+    });
+  };
+
   return (
     <div>
       <h1 className="w-96 text-3xl font-semibold">
@@ -21,27 +34,40 @@ const Form = () => {
       <p className="my-5 text-xl">
         Tell us more about yourself and what's on your mind.
       </p>
-      <form action="https://docs.google.com/forms/d/e/1FAIpQLSeISuULYy8xpdtFjGNZ_W5gOgZBkIKmyPCIMQLo2JPRdYdV8Q/formResponse" className="flex w-full flex-col gap-3">
+
+      <form
+        className="flex w-full flex-col gap-3"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(fullname, email, message, selectedServices);
+        }}
+      >
         <input
           type="text"
-          name="entry.2064855694"
           id="fullname"
           placeholder="Your name"
           className="w-full border-b border-zinc-600 p-1 placeholder-stone-600 md:bg-lime-400"
+          name="entry.631322038"
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
         />
         <input
           type="email"
-          name="entry.464797640"
+          name="entry.1914670464"
           id="email"
           placeholder="your@company.com"
           className="w-full border-b border-zinc-600 p-1 placeholder-stone-600 md:bg-lime-400"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="text"
-          name="entry.251431214"
+          name="entry.2144415752"
           id="message"
           placeholder="Tell us a little about your project..."
           className="h-24 w-full border-b border-zinc-600 p-1 placeholder-stone-600 md:bg-lime-400"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
 
         <p className="my-3 text-stone-700">How can we help?</p>
@@ -52,9 +78,10 @@ const Form = () => {
               <label className="flex items-center gap-1" key={service}>
                 <input
                   type="checkbox"
-                  name="entry.471991504"
-                  value={service}
+                  name="entry.2110795278"
                   className="size-5"
+                  value={service}
+                  onChange={(e) => handleCheckbox(service, e.target.checked)}
                 />{" "}
                 {service}
               </label>

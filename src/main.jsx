@@ -13,6 +13,7 @@ const rootEl = document.querySelector("#root");
 const root = createRoot(rootEl);
 root.render(
   <React.StrictMode>
+    {/* <Test /> */}
     <Home />
   </React.StrictMode>
 );
